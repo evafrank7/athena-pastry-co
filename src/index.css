@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-navy: #0f3558; /* Primary brand color - navbar, buttons, footer */
+  --color-navy-dark: #0a2742; 
+  --color-blue: #165b9c; /* brighter Greek Blue: selected form options, tile patterns */
+  --color-blue-light: #dce9f4;
+
+  /* Neutrals */
+  --color-cream: #f8f4ec; /* Main warm cream background */
+  --color-cream-dark: #eee6d9; /* Alternating sections/cards */
+  --color-white: #ffffff;
+
+  --color-text: #17263a;
+  --color-text-light: #5e6670;
+  --color-border: #d8d2c8;
+
+  /* Accent Colors */
+  --color-gold: #b99252;
+  --color-olive: #777764;
+
+  /* Backgrounds */
+  --background-primary: var(--color-cream);
+  --background-secondary: var(--color-white);
+  --background-dark: var(--color-navy);
+
+  /* Text */
+  --text-primary: var(--color-text);
+  --text-secondary: var(--color-text-light);
+  --text-on-dark: var(--color-white);
+
+  /* Buttons */
+  --button-primary: var(--color-navy);
+  --button-primary-hover: var(--color-navy-dark);
+  --button-text: var(--color-white);
+
+  /* Form States */
+  --input-background: var(--color-white);
+  --input-border: var(--color-border);
+  --input-focus: var(--color-blue);
+
+  /* Optional */
+  --border-radius: 0px;
+  --transition: 0.2s ease;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-text);
+}
