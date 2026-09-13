@@ -3,13 +3,14 @@
 @theme {
   /* Brand Colors */
   --color-navy: #0f3558; /* Primary brand color - navbar, buttons, footer */
-  --color-navy-dark: #0a2742; 
+  --color-navy-dark: #0a2742;
   --color-blue: #165b9c; /* brighter Greek Blue: selected form options, tile patterns */
   --color-blue-light: #dce9f4;
 
   /* Neutrals */
   --color-cream: #f8f4ec; /* Main warm cream background */
   --color-cream-dark: #eee6d9; /* Alternating sections/cards */
+  --color-cream-light: #f6f1e8;
   --color-white: #ffffff;
 
   --color-text: #17263a;
@@ -43,7 +44,15 @@
   /* Optional */
   --border-radius: 0px;
   --transition: 0.2s ease;
+
+  --font-heading: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Inter", Arial, sans-serif;
 }
+
+body {
+  font-family: var(--font-body);
+}
+
 
 body {
   background-color: var(--color-cream);
