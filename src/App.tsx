@@ -1,4 +1,3 @@
-import "./index.css";
 import AnnouncementBar from "./Components/AnnouncementBar";
 import NavBar from "./Components/NavBar";
 import Introduction from "./Components/Introduction";

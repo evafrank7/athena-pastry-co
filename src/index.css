@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Parisienne&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -11,6 +12,7 @@
   --color-cream: #f8f4ec; /* Main warm cream background */
   --color-cream-dark: #eee6d9; /* Alternating sections/cards */
   --color-cream-light: #f6f1e8;
+  --color-cream-pale: #fdfbf7; /* lightest - section bg behind white cards */
   --color-white: #ffffff;
 
   --color-text: #17263a;
@@ -46,15 +48,12 @@
   --transition: 0.2s ease;
 
   --font-heading: "Cormorant Garamond", Georgia, serif;
-  --font-body: "Inter", Arial, sans-serif;
+  --font-body: "EB Garamond", Georgia, serif;
+  --font-script: "Parisienne", cursive;
 }
 
 body {
   font-family: var(--font-body);
-}
-
-
-body {
   background-color: var(--color-cream);
   color: var(--color-text);
 }
