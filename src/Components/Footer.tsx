@@ -48,7 +48,7 @@ const Footer = () => {
             <img
               src={logo}
               alt="Athena Pastry Co."
-              className="h-36 w-36 object-contain"
+              className="h-40 w-40 object-contain"
             />
           </a>
 

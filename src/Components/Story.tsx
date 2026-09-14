@@ -4,7 +4,7 @@ const Story = () => {
         <div>
             <section className="grid md:grid-cols-[3fr_2fr]">
                 {/* Left column */}
-                <div className="relative min-h-[210px] md:min-h-[420px]">
+                <div className="relative min-h-[210px] md:min-h-[360px]">
                     <img
                         src={banner}
                         alt="Everything Sweeter Banner"

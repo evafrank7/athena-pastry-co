@@ -35,7 +35,7 @@ const Offerings = () => {
         <div className="bg-cream-pale text-navy py-16">
             <div className="flex items-center justify-center gap-6">
                 <span className="h-px w-12 bg-navy/40" />
-                <h2 className="font-heading text-base font-bold uppercase tracking-[0.25em] text-navy">
+                <h2 className="text-xl uppercase tracking-[0.25em] text-navy">
                     Our Offerings
                 </h2>
                 <span className="h-px w-12 bg-navy/40" />
@@ -47,28 +47,32 @@ const Offerings = () => {
                     return (
                         <div
                             key={title}
-                            className="flex flex-col bg-white p-4 shadow-[0_2px_16px_rgba(23,38,58,0.08)]"
+                            className="flex flex-col overflow-hidden bg-white shadow-[0_4px_18px_rgba(23,38,58,0.1)]"
                         >
                             <img
                                 src={picture}
                                 alt={title}
-                                className="mb-5 h-56 w-full object-cover"
+                                className="h-64 w-full object-cover"
                             />
-                            <h3 className="font-heading text-2xl text-navy">{title}</h3>
-                            {paragraphs.map((paragraph) => (
-                                <p
-                                    key={paragraph}
-                                    className="mt-3 flex-1 text-navy/80"
+                            <div className="flex flex-1 flex-col items-center px-6 py-5">
+                                <h3 className="font-heading text-2xl text-navy">
+                                    {title}
+                                </h3>
+                                {paragraphs.map((paragraph) => (
+                                    <p
+                                        key={paragraph}
+                                        className="mt-2 flex-1 leading-snug text-navy/80"
+                                    >
+                                        {paragraph}
+                                    </p>
+                                ))}
+                                <a
+                                    href="/menu"
+                                    className="mt-4 inline-flex items-center justify-center gap-3 text-navy underline-offset-4 hover:underline"
                                 >
-                                    {paragraph}
-                                </p>
-                            ))}
-                            <a
-                                href="/menu"
-                                className="mt-5 inline-flex items-center justify-center gap-2 text-navy underline-offset-4 hover:underline"
-                            >
-                                {redirect}
-                            </a>
+                                    {redirect} <span aria-hidden="true">&rarr;</span>
+                                </a>
+                            </div>
                         </div>
                     );
                 })}
