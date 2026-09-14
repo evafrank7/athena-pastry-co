@@ -67,7 +67,7 @@ const Offerings = () => {
                                 href="/menu"
                                 className="mt-5 inline-flex items-center justify-center gap-2 text-navy underline-offset-4 hover:underline"
                             >
-                                {redirect} <span aria-hidden="true">&rarr;</span>
+                                {redirect}
                             </a>
                         </div>
                     );
