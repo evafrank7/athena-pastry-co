@@ -9,7 +9,7 @@ const Introduction = () => {
                     Sweet moments, a brighter tomorrow
                 </p>
 
-                <h1 className="max-w-[14ch] text-6xl text-navy">
+                <h1 className="max-w-[14ch] font-heading text-7xl leading-[1.05] text-navy">
                     A Taste of Greece, Made with Love.
                 </h1>
 
@@ -35,6 +35,9 @@ const Introduction = () => {
                     alt="Cookie Collection"
                     className="absolute inset-0 h-full w-full object-cover"
                 />
+                <p className="absolute right-10 top-1/2 z-10 w-[5ch] -translate-y-1/2 font-script text-3xl leading-tight text-white after:mt-4 after:block after:w-12 after:border-t after:border-white/70">
+                    Good Things Are Baked Here
+                </p>
             </div>
         </section>
     );

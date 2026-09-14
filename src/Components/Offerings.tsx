@@ -32,27 +32,29 @@ const offerings = [
 
 const Offerings = () => {
     return (
-        <div className="bg-cream text-navy py-12">
+        <div className="bg-cream-pale text-navy py-16">
             <div className="flex items-center justify-center gap-6">
                 <span className="h-px w-12 bg-navy/40" />
-                <h2 className="text-md uppercase tracking-[0.25em] text-navy font-bold">
+                <h2 className="font-heading text-base font-bold uppercase tracking-[0.25em] text-navy">
                     Our Offerings
                 </h2>
                 <span className="h-px w-12 bg-navy/40" />
             </div>
-            <div className="grid grid-cols-1 gap-6 px-6 pt-10 text-center md:grid-cols-2 lg:grid-cols-4 lg:px-8">
+            <div 
+                className="grid grid-cols-1 gap-6 px-6 pt-10 text-center md:grid-cols-2 lg:grid-cols-4 lg:px-8"
+            >
                 {offerings.map(({ title, picture, paragraphs, redirect }) => {
                     return (
                         <div
                             key={title}
-                            className="flex flex-col border border-border bg-white p-4"
+                            className="flex flex-col bg-white p-4 shadow-[0_2px_16px_rgba(23,38,58,0.08)]"
                         >
                             <img
                                 src={picture}
                                 alt={title}
                                 className="mb-5 h-56 w-full object-cover"
                             />
-                            <h3 className="text-xl text-navy">{title}</h3>
+                            <h3 className="font-heading text-2xl text-navy">{title}</h3>
                             {paragraphs.map((paragraph) => (
                                 <p
                                     key={paragraph}
