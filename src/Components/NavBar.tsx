@@ -1,6 +1,7 @@
 import { FaInstagram } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import logo from "../Assets/images/main-logo.png";
+import { FaCartShopping } from "react-icons/fa6";
 
 const NavBar = () => {
   return (
@@ -22,6 +23,11 @@ const NavBar = () => {
           <a href="https://www.instagram.com/athenapastryco/" aria-label="Instagram" target="_blank">
             <FaInstagram className="text-3xl" />
           </a>
+        </li>
+        <li>
+          <Link to="/checkout">
+            <FaCartShopping className="text-3xl" />
+          </Link>
         </li>
       </ul>
     </nav>

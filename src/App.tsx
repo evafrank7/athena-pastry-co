@@ -6,6 +6,7 @@ import Offerings from "./Components/Offerings";
 import Story from "./Components/Story";
 import Footer from "./Components/Footer";
 import AboutPage from "./Pages/AboutPage";
+import CheckoutPage from "./Pages/CheckoutPage";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             }
           />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/checkout" element={<CheckoutPage /> }/>
         </Routes>
         <Footer />
       </div>
