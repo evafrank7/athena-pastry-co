@@ -57,3 +57,9 @@ body {
   background-color: var(--color-cream);
   color: var(--color-text);
 }
+
+@layer components {
+  .form-input {
+    @apply mt-2 w-full border border-navy/20 bg-white px-4 py-3 text-navy outline-none transition-colors focus:border-navy;
+  }
+}

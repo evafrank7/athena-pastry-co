@@ -7,6 +7,8 @@ import Story from "./Components/Story";
 import Footer from "./Components/Footer";
 import AboutPage from "./Pages/AboutPage";
 import CheckoutPage from "./Pages/CheckoutPage";
+import Menu from "./Pages/Menu";
+import CustomOrderPage from "./Pages/CustomOrderPage";
 
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
               </main>
             }
           />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/custom-orders" element={<CustomOrderPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/checkout" element={<CheckoutPage /> }/>
         </Routes>
