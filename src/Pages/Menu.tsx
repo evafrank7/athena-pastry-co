@@ -28,12 +28,12 @@ const Menu = () => {
 
     return (
         <main className="bg-cream-pale text-navy">
-            <section className="border-y border-border bg-cream px-6 py-16 text-center sm:px-10">
-                <p className="text-xs font-bold uppercase tracking-[0.3em] text-navy/60">
+            <section className="border-y border-border bg-navy px-6 py-16 text-center sm:px-10">
+                <p className="text-xs font-bold uppercase tracking-[0.3em] text-cream/60">
                     Traditional recipes, timeless flavors
                 </p>
-                <h1 className="mt-3 font-heading text-5xl sm:text-6xl">Our Menu</h1>
-                <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-navy/75">
+                <h1 className="mt-3 font-heading text-5xl sm:text-6xl text-cream">Our Menu</h1>
+                <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-cream/75">
                     Handcrafted Greek pastries made in small batches for everyday
                     moments, celebrations, and everything in between.
                 </p>
