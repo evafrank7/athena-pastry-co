@@ -19,7 +19,7 @@ export const initialMenuItems: MenuItem[] = [
   {
     id: "baklava-rolls",
     name: "Baklava Rolls",
-    price: 0,
+    price: 2800, // Price in cents ($28.00)
     quantity: 0,
     description: "Crisp phyllo wrapped around a rich nut filling and finished with fragrant syrup.",
     available: true,
@@ -29,7 +29,7 @@ export const initialMenuItems: MenuItem[] = [
   {
     id: "baklava-nests",
     name: "Baklava Nests",
-    price: 0,
+    price: 3200, 
     quantity: 0,
     flavorOptions: ["Walnut", "Pistachio", "Almond"],
     description: "Delicate coils of golden phyllo filled with your choice of finely chopped nuts.",
@@ -40,7 +40,7 @@ export const initialMenuItems: MenuItem[] = [
   {
     id: "baklava-roses",
     name: "Baklava Roses",
-    price: 0,
+    price: 3200,
     quantity: 0,
     description: "Flaky, hand-shaped baklava with a beautiful rose finish and honeyed crunch.",
     available: true,
@@ -50,7 +50,7 @@ export const initialMenuItems: MenuItem[] = [
   {
     id: "koulourakia",
     name: "Koulourakia",
-    price: 0,
+    price: 2000,
     quantity: 0,
     description: "Traditional Greek butter cookies with a tender crumb and a hint of vanilla.",
     available: true,
@@ -60,7 +60,7 @@ export const initialMenuItems: MenuItem[] = [
   {
     id: "finikia",
     name: "Finikia",
-    price: 0,
+    price: 1500,
     quantity: 0,
     description: "Spiced Greek cookies soaked in honey syrup and topped with crushed walnuts.",
     available: true,
@@ -70,7 +70,7 @@ export const initialMenuItems: MenuItem[] = [
   {
     id: "amygdalota",
     name: "Amygdalota",
-    price: 0,
+    price: 2000,
     quantity: 0,
     description: "Soft almond cookies with a lightly crisp exterior and fragrant almond center.",
     available: true,
@@ -80,7 +80,7 @@ export const initialMenuItems: MenuItem[] = [
   {
     id: "custom-variety-pack",
     name: "Custom Variety Pack",
-    price: 0,
+    price: 3000,
     quantity: 0,
     description: "A curated assortment of Athena favorites, packaged for sharing or gifting.",
     available: true,
