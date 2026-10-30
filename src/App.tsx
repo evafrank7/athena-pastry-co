@@ -9,6 +9,7 @@ import AboutPage from "./Pages/AboutPage";
 import CheckoutPage from "./Pages/CheckoutPage";
 import Menu from "./Pages/Menu";
 import CustomOrderPage from "./Pages/CustomOrderPage";
+import ContactPage from "./Pages/ContactPage";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/menu" element={<Menu />} />
           <Route path="/custom-orders" element={<CustomOrderPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/checkout" element={<CheckoutPage /> }/>
         </Routes>
         <Footer />
