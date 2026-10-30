@@ -1,12 +1,10 @@
 const OrderFormDetails = () => {
   return (
-    
     <div className="mt-8 border-t border-navy/10 pt-7">
       <h2 className="font-heading text-3xl"> Contact & Pickup</h2>
       <p className="mt-2 text-navy/65">
         {" "}
-        Please provide your contact information and a preferred pickup
-        time.
+        Please provide your contact information and a preferred pickup time.
       </p>
 
       <div className="mt-5 grid gap-5 sm:grid-cols-2">
@@ -44,10 +42,7 @@ const OrderFormDetails = () => {
         </label>
 
         <label>
-          <span className="text-sm font-bold">
-            {" "}
-            Preferred Pickup Date{" "}
-          </span>
+          <span className="text-sm font-bold"> Preferred Pickup Date </span>
           <input
             required
             type="date"
@@ -58,10 +53,7 @@ const OrderFormDetails = () => {
         </label>
 
         <label>
-          <span className="text-sm font-bold">
-            {" "}
-            Preferred Pickup Time{" "}
-          </span>
+          <span className="text-sm font-bold"> Preferred Pickup Time </span>
           <input
             required
             type="time"
@@ -82,7 +74,7 @@ const OrderFormDetails = () => {
         </label>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default OrderFormDetails
+export default OrderFormDetails;

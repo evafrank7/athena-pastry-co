@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from "react";
 import { initialMenuItems } from "../data/menuItems";
 import background from "../Assets/images/custom-order-form-background.png";
+import { submitForm } from "../utils/submitForm";
+import OrderConfirmation from "../Components/OrderConfirmation";
 
 const steps = ["Contact", "Treats", "Details", "Pickup"];
 
@@ -8,6 +10,9 @@ const CustomOrderPage = () => {
   const [step, setStep] = useState(1);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
+  const [formValues, setFormValues] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState("");
 
   function toggleItem(id: string) {
     setSelectedItems((current) =>
@@ -17,37 +22,98 @@ const CustomOrderPage = () => {
     );
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setSubmissionError("");
+
+    const currentValues: Record<string, string> = {};
+    const currentFormData = new FormData(event.currentTarget);
+
+    currentFormData.forEach((value, key) => {
+      currentValues[key] = String(value);
+    });
+    const allValues = { ...formValues, ...currentValues };
+
+    setFormValues(allValues);
+
     if (step < steps.length) {
       setStep((current) => current + 1);
-    } else {
+      return;
+    }
+
+    const itemNames = selectedItems
+      .map((id) => initialMenuItems.find((item) => item.id === id)?.name)
+      .filter((name): name is string => Boolean(name));
+
+    const quantities = Object.fromEntries(
+      selectedItems.map((id) => {
+        const item = initialMenuItems.find((menuItem) => menuItem.id === id);
+        const quantity = allValues[`${id}Quantity`] || "Not specified";
+        const flavor = allValues[`${id}Flavor`];
+
+        return [
+          item?.name || id,
+          flavor ? `${quantity} — ${flavor}` : quantity,
+        ];
+      }),
+    );
+
+    try {
+      setIsSubmitting(true);
+      await submitForm({
+        formType: "customOrder",
+        fullName: allValues.fullName,
+        email: allValues.email,
+        phone: allValues.phone,
+        contactMethod: allValues.contactMethod,
+        items: itemNames,
+        quantities,
+        notes: allValues.notes,
+        pickupDate: allValues.pickupDate,
+        pickupTime: allValues.pickupTime,
+        website: allValues.website,
+      });
       setSubmitted(true);
+    } catch (error) {
+      setSubmissionError(
+        error instanceof Error
+          ? error.message
+          : "Unable to send your request. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
   if (submitted) {
+    const confirmationItems = selectedItems.map((id) => {
+      const item = initialMenuItems.find((menuItem) => menuItem.id === id);
+      const quantity = formValues[`${id}Quantity`] || "Quantity not specified";
+      const flavor = formValues[`${id}Flavor`];
+
+      return {
+        name: item?.name || id,
+        details: flavor ? `${quantity} · ${flavor}` : quantity,
+      };
+    });
+
     return (
-      <main className="min-h-screen bg-cream px-5 py-16 text-center text-navy sm:px-10 sm:py-24">
-        <p className="text-xs font-bold uppercase tracking-[0.3em] text-navy/60">
-          Order Inquiry
-        </p>
-        <h1 className="mt-4 font-heading text-4xl sm:text-5xl">Thank You</h1>
-        <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-navy/75 sm:text-lg">
-          Your form is ready to connect to a submission service. No information
-          has been sent yet.
-        </p>
-        <button
-          type="button"
-          onClick={() => {
+      <OrderConfirmation
+        customerName={formValues.fullName || "there"}
+        email={formValues.email || "your email"}
+        phone={formValues.phone}
+        items={confirmationItems}
+        pickupDate={formValues.pickupDate}
+        pickupTime={formValues.pickupTime}
+        notes={formValues.notes}
+        onStartOver={() => {
             setSubmitted(false);
             setStep(1);
-          }}
-          className="mt-8 bg-navy px-8 py-3 text-cream hover:bg-navy-dark"
-        >
-          Start Over
-        </button>
-      </main>
+            setSelectedItems([]);
+            setFormValues({});
+            setSubmissionError("");
+        }}
+      />
     );
   }
 
@@ -98,6 +164,14 @@ const CustomOrderPage = () => {
             onSubmit={handleSubmit}
             className="mt-7 border border-navy/10 bg-white p-4 shadow-[0_8px_30px_rgba(15,53,88,0.08)] sm:mt-10 sm:p-8 lg:p-10"
           >
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              className="hidden"
+              aria-hidden="true"
+            />
             {step === 1 && (
               <section>
                 <h2 className="font-heading text-2xl sm:text-3xl">Your Information</h2>
@@ -211,6 +285,7 @@ const CustomOrderPage = () => {
                             <p className="font-heading text-xl">{item.name}</p>
                             {item.flavorOptions && (
                               <select
+                                name={`${id}Flavor`}
                                 className="form-input"
                                 aria-label={`${item.name} flavor`}
                               >
@@ -309,6 +384,15 @@ const CustomOrderPage = () => {
               </section>
             )}
 
+            {submissionError && (
+              <p
+                role="alert"
+                className="mt-6 border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800"
+              >
+                {submissionError}
+              </p>
+            )}
+
             <div className="mt-8 flex flex-col-reverse gap-3 border-t border-navy/10 pt-6 sm:mt-10 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
               {step > 1 ? (
                 <button
@@ -323,9 +407,14 @@ const CustomOrderPage = () => {
               )}
               <button
                 type="submit"
-                className="w-full bg-navy px-6 py-3 text-cream hover:bg-navy-dark sm:w-auto sm:px-8"
+                disabled={isSubmitting}
+                className="w-full bg-navy px-6 py-3 text-cream hover:bg-navy-dark disabled:cursor-not-allowed disabled:bg-navy/50 sm:w-auto sm:px-8"
               >
-                {step === steps.length ? "Send Order Inquiry" : "Continue →"}
+                {isSubmitting
+                  ? "Sending..."
+                  : step === steps.length
+                    ? "Send Order Inquiry"
+                    : "Continue →"}
               </button>
             </div>
           </form>

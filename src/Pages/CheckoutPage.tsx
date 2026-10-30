@@ -2,6 +2,8 @@ import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import OrderFormDetails from "../Components/OrderFormDetails";
+import { submitForm } from "../utils/submitForm";
+import OrderConfirmation from "../Components/OrderConfirmation";
 
 
 function formatPrice(priceInCents: number) {
@@ -16,11 +18,79 @@ const CheckoutPage = () => {
     useCart();
   const hasUnpricedItems = cart.some((item) => item.price === 0);
 
-  const [demo, setDemo] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState("");
+  const [confirmationValues, setConfirmationValues] = useState<Record<string, string>>({});
 
-  function handleCheckout(event: FormEvent<HTMLFormElement>) {
+  async function handleCheckout(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setDemo(true);
+    setSubmissionError("");
+
+    const values: Record<string, string> = {};
+    new FormData(event.currentTarget).forEach((value, key) => {
+      values[key] = String(value);
+    });
+
+    const items = cart.map((item) =>
+      item.selectedFlavor ? `${item.name} (${item.selectedFlavor})` : item.name,
+    );
+    const quantities = Object.fromEntries(
+      cart.map((item) => [
+        item.selectedFlavor ? `${item.name} (${item.selectedFlavor})` : item.name,
+        `${item.quantity} ${item.unit}`,
+      ]),
+    );
+    const estimatedTotal = formatPrice(subtotalInCents);
+    const notes = [
+      values["order-notes"] || "No additional notes",
+      `Estimated website total: ${estimatedTotal}`,
+    ].join("\n");
+
+    try {
+      setIsSubmitting(true);
+      await submitForm({
+        formType: "customOrder",
+        fullName: values.fullName,
+        email: values.email,
+        phone: values.phone,
+        contactMethod: "Email",
+        items,
+        quantities,
+        notes,
+        pickupDate: values.pickupDate,
+        pickupTime: values.pickupTime,
+        website: values.website,
+      });
+      setConfirmationValues({ ...values, notes });
+      setSubmitted(true);
+    } catch (error) {
+      setSubmissionError(
+        error instanceof Error
+          ? error.message
+          : "Unable to send your order request. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  if (submitted) {
+    return (
+      <OrderConfirmation
+        customerName={confirmationValues.fullName || "there"}
+        email={confirmationValues.email || "your email"}
+        phone={confirmationValues.phone}
+        items={cart.map((item) => ({
+          name: item.name,
+          details: `${item.quantity} ${item.unit}${item.selectedFlavor ? ` · ${item.selectedFlavor}` : ""}`,
+        }))}
+        pickupDate={confirmationValues.pickupDate}
+        pickupTime={confirmationValues.pickupTime}
+        notes={confirmationValues["order-notes"]}
+        estimatedTotal={formatPrice(subtotalInCents)}
+      />
+    );
   }
 
   return (
@@ -53,6 +123,14 @@ const CheckoutPage = () => {
             onSubmit={handleCheckout}
             className="mt-10 grid items-start gap-8 lg:grid-cols-[1fr_22rem]"
           >
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              className="hidden"
+              aria-hidden="true"
+            />
             <section className="border border-navy/10 bg-white p-5 shadow-[0_8px_30px_rgba(15,53,88,0.08)] sm:p-8">
               <div className="flex items-center justify-between border-b border-navy/10 pb-5">
                 <h2 className="font-heading text-3xl">Cart Items</h2>
@@ -177,22 +255,20 @@ const CheckoutPage = () => {
               )}
               <button
                 type="submit"
-                disabled={hasUnpricedItems}
+                disabled={hasUnpricedItems || isSubmitting}
                 className="mt-6 w-full bg-navy px-6 py-3.5 text-cream hover:bg-navy-dark disabled:cursor-not-allowed disabled:bg-navy/35"
               >
-                Preview Order
+                {isSubmitting
+                  ? "Sending..."
+                  : "Send Order Request"}
               </button>
-              {demo && (
-                <p
-                  role="status"
-                  className="mt-4 border border-gold/40 bg-cream px-4 py-3 text-sm leading-relaxed text-navy/75"
-                >
-                  Demo complete! No order was submitted and no payment was
-                  collected.
+              {submissionError && (
+                <p role="alert" className="mt-4 border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800">
+                  {submissionError}
                 </p>
               )}
               <p className="mt-3 text-center text-xs text-navy/50">
-                Portfolio preview only. Square will be connected before launch.
+                No payment is collected yet. Square payment follows approval.
               </p>
             </aside>
           </form>
